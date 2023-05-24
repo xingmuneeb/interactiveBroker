@@ -20,7 +20,7 @@ class interactiveReports:
         
 
     def startWorking(self):
-        self.driver.get("https://ndcdyn.interactivebrokers.com/sso/Login?RL=1&locale=en_US")
+        self.driver.get("https://www.interactivebrokers.com/sso/Login?RL=1&locale=en_US")
         self.driver.find_element(By.XPATH, value='//*[@id="authcredentials"]/div[1]/div/p[1]/span[2]').click()
         #typing credentials
         self.driver.find_element(By.XPATH, value="//input[@id='user_name']").send_keys("emagin910")
