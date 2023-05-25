@@ -41,7 +41,7 @@ class interactiveReports:
         awaitedEl.click()
         sleep(4)
         #Getting All PDFs
-        pdfs = self.driver.find_elements(By.XPATH,value="//i[contains(@class,'fa-file-pdf')]/parent::a")
+        pdfs = self.driver.find_elements(By.XPATH,value="(//i[contains(@class,'fa-file-pdf')]/parent::a)[position()>2]")
         for pdf in pdfs:
             pdf.click()
             sleep(5)
