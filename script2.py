@@ -31,7 +31,12 @@ class interactiveReports:
 
     def getReport(self):
         #Navigating to the statemtns page
-        self.driver.get("https://www.interactivebrokers.co.uk/AccountManagement/AmAuthentication?action=PORTFOLIOANALYST_BETA")
+        awaitedEl=self.wait.until(EC.visibility_of_element_located((By.XPATH, "//button[contains(text(),'Performance & Reports')]")))
+        awaitedEl.click()
+        sleep(1)
+        awaitedEl=self.wait.until(EC.visibility_of_element_located((By.XPATH, "//button[contains(text(),'PortfolioAnalyst')]")))
+        awaitedEl.click()
+        # self.driver.get("https://www.interactivebrokers.co.uk/AccountManagement/AmAuthentication?action=PORTFOLIOANALYST_BETA")
         awaitedEl=self.wait.until(EC.visibility_of_element_located((By.XPATH, "//a[contains(text(),'Reports')]")))
         awaitedEl.click()
         sleep(4)
