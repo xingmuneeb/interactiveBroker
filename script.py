@@ -8,6 +8,10 @@ from time import sleep
 from datetime import datetime, timedelta
 import os
 import glob
+from multiprocessing.dummy import Pool as  ThreadPool
+import random
+
+random.randint(1,5)
 
 class interactiveReports:
 
@@ -16,22 +20,34 @@ class interactiveReports:
         prefs = {"download.default_directory" : os.getcwd()+"\\pdf"}
         chromeOptions.add_experimental_option("prefs",prefs)
         self.driver =  webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()),options=chromeOptions)
+        self.driver.maximize_window()
         self.wait =  WebDriverWait(self.driver, 20)
-        
+        self.driver.execute_script("")
 
     def startWorking(self):
         self.driver.get("https://ndcdyn.interactivebrokers.com/sso/Login?RL=1&locale=en_US")
-        self.driver.find_element(By.XPATH, value='//*[@id="authcredentials"]/div[1]/div/p[1]/span[2]').click()
+        self.driver.find_element(By.XPATH, value="//*[@id='authcredentials']/div[1]/div/p[1]/span[2] | //span[contains(text(),'Live')]/following-sibling::label").click()
         #typing credentials
-        self.driver.find_element(By.XPATH, value="//input[@id='user_name']").send_keys("emagin909")
-        self.driver.find_element(By.XPATH, value="//input[@id='password']").send_keys("Alex1234!")
-        self.driver.find_element(By.XPATH, value="//button[@id='submitForm']").click()
-        sleep(5)
+        sleep(2)
+        self.driver.find_element(By.XPATH, value="//input[@id='user_name'] | //input[@name='username']").send_keys("emagin909")
+        self.driver.find_element(By.XPATH, value="//input[@id='password'] | //input[@name='password']").send_keys("Alex1234!")
+        self.driver.find_element(By.XPATH, value="//button[@id='submitForm'] | (//button[@type='submit'][contains(text(),'Login')])[1]").click()
+        sleep(10)
         self.getReport()
+
 
     def getReport(self):
         #Navigating to the statemtns page
-        self.driver.get("https://ndcdyn.interactivebrokers.com/AccountManagement/AmAuthentication?action=Statements")
+        awaitedEl=self.wait.until(EC.visibility_of_element_located((By.XPATH, "//button[contains(text(),'Performance & Reports')]")))
+        awaitedEl.click()
+        sleep(1)
+        awaitedEl=self.wait.until(EC.visibility_of_element_located((By.XPATH, "//button[contains(text(),'Statement')]")))
+        awaitedEl.click()
+        # self.driver.get("https://www.interactivebrokers.co.uk/AccountManagement/AmAuthentication?action=PORTFOLIOANALYST_BETA")
+
+        sleep(4)
+        #Scroll Down Selenium python
+        self.driver.execute_script("window.scrollTo(0, 1000)") 
         awaitedEl=self.wait.until(EC.visibility_of_element_located((By.XPATH, "//strong[contains(text(),'Activity')]/parent::p/parent::div/following-sibling::div/p/span/a")))
         awaitedEl.click()
         sleep(2)
@@ -55,4 +71,7 @@ class interactiveReports:
         
 
 interactiveReports().startWorking()
+
+
+
 
