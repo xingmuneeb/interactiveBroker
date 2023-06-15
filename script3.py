@@ -23,16 +23,16 @@ class interactiveReports:
         
 
     def startWorking(self):
-        self.driver.get("https://www.interactivebrokers.com/sso/Login?RL=1&locale=en_US")
-        sleep(1)
-        self.driver.find_element(By.XPATH, value='//*[@id="authcredentials"]/div[1]/div/p[1]/span[2] | //input[@id="toggle1"]').click()
-        sleep(1)
+        self.driver.get("https://ndcdyn.interactivebrokers.com/sso/Login?RL=1&locale=en_US")
+        self.driver.find_element(By.XPATH, value="//*[@id='authcredentials']/div[1]/div/p[1]/span[2] | //span[contains(text(),'Live')]/following-sibling::label").click()
         #typing credentials
-        self.driver.find_element(By.XPATH, value="//input[@id='user_name']").send_keys("emagin910")
-        self.driver.find_element(By.XPATH, value="//input[@id='password']").send_keys("alpha2023!1")
-        self.driver.find_element(By.XPATH, value="//button[@id='submitForm']").click()
-        sleep(7)
+        sleep(2)
+        self.driver.find_element(By.XPATH, value="//input[@id='user_name'] | //input[@name='username']").send_keys("emagin910")
+        self.driver.find_element(By.XPATH, value="//input[@id='password'] | //input[@name='password']").send_keys("alpha2023!1")
+        self.driver.find_element(By.XPATH, value="//button[@id='submitForm'] | (//button[@type='submit'][contains(text(),'Login')])[1]").click()
+        sleep(10)
         self.getReport()
+
 
     def getReport(self):
         #Navigating to the statemtns page
